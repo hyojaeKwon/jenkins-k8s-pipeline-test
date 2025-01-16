@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: test-server-1-files
+  labels:
+    part-of: test-deploy
+    component: backend-server
+    name: test-server
+    instance: test-server-1-files
+    version: 1.0.0
+    managed-by: kubectl
+spec:
+  capacity:
+    storage: 1G
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  local:
+    path: "/root/k8s-local-volume/2121"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+          - {key: kubernetes.io/hostname, operator: In, values: [k8s-master]}

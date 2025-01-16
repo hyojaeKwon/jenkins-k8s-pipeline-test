@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: test-deploy
+  name: test-deploy-1-properties
+  labels:
+    part-of: test-deploy
+    component: backend-server
+    name: test-deploy
+    instance: test-deploy-1
+    version: 1.0.0
+    managed-by: kubectl
+
+data:
+  application_role: "TEST"
+  secret_filepath: "/usr/src/myapp/datasource/secret-info.yaml"

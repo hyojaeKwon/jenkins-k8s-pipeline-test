@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: test-deploy
+  name: test-server-1
+  labels:
+    part-of: test-deploy
+    component: backend-server
+    name: test-server
+    instance: test-server-1
+    managed-by: kubectl
+spec:
+  selector:
+    matchLabels:
+      part-of: test-deploy
+      component: backend-server
+      name: test-server
+      instance: test-server-1
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        part-of: test-deploy
+        component: backend-server
+        name: test-server
+        instance: test-server-1
+        version: 1.0.0
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: ip-172-31-27-52
+      containers:
+        - name: test-server-1
+          image: khj010909/test-server:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              name: http
+          envFrom:
+            - configMapRef:
+                name: test-deploy-1-properties
+          startupProbe:
+            httpGet:
+              path: "/api/health"
+              port: 8080
+            periodSeconds: 5
+            failureThreshold: 24
+          readinessProbe:
+            httpGet:
+              path: "/api/health"
+              port: 8080
+            periodSeconds: 5
+            failureThreshold: 24
+          livenessProbe:
+            httpGet:
+              path: "/api/health"
+              port: 8080
+            periodSeconds: 5
+            failureThreshold: 24
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "100m"
+            limits:
+              memory: "200Mi"
+              cpu: "200m"
+          volumeMounts:
+            - name: files
+              mountPath: /usr/src/myapp/files/dev
+            - name: secret-datasource
+              mountPath: /usr/src/myapp/datasource
+      volumes:
+        - name: files
+          persistentVolumeClaim:
+            claimName: test-server-1-files
+        - name: secret-datasource
+          secret:
+            secretName: api-tester-1-secret

@@ -23,4 +23,4 @@ spec:
       part-of: test-deploy
       component: backend-server
       name: test-server
-      instance: test-server-1
+      instance: test-server-1-files

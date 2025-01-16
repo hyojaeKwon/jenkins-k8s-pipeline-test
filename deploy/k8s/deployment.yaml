@@ -26,13 +26,13 @@ spec:
         component: backend-server
         name: test-server
         instance: test-server-1
-        version: v1.0.0
+        version: 1.0.0
     spec:
       nodeSelector:
         kubernetes.io/hostname: ip-172-31-27-52
       containers:
         - name: test-server-1
-          image: docker.io/khj010909/test-server:1.0.0
+          image: docker.io/khj010909/test-server:v1.0.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

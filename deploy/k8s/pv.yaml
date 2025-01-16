@@ -11,7 +11,7 @@ metadata:
     managed-by: kubectl
 spec:
   capacity:
-    storage: 1G
+    storage: 1Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce

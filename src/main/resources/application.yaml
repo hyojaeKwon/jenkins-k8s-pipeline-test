@@ -1,3 +1,5 @@
 spring:
   application:
     name: cicd-test
+application:
+  role: ${application_role}

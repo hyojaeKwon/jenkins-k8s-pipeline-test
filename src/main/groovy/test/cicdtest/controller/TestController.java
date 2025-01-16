@@ -1,6 +1,7 @@
 package test.cicdtest.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,10 +15,17 @@ import test.cicdtest.Calculator;
 public class TestController {
 
     private final Calculator calculator;
+    @Value("${application.role}")
+    private String role;
 
     @GetMapping("/health")
     public String health() {
         return "call health";
+    }
+
+    @GetMapping("/role")
+    public String getRole() {
+        return role;
     }
 
     @PostMapping("/{number}")

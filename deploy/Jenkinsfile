@@ -1,0 +1,53 @@
+pipeline {
+    agent any
+
+    tools {
+        gradle 'gradle-8.11'
+        jdk 'jdk-17'
+    }
+
+    environment {
+        DOCKERHUB_USERNAME = 'khj010909'
+        GITHUB_URL = 'https://github.com/hyojaeKwon/jenkins-k8s-pipeline-test.git'
+    }
+
+    stages {
+        stage('Source Build') {
+            steps {
+                // 소스파일 체크아웃
+                git branch: 'master', url: 'https://github.com/hyojaeKwon/jenkins-k8s-pipeline-test.git'
+                sh "chmod +x ./gradlew"
+                sh "gradle clean build"
+            }
+        }
+
+        stage('Container Build') {
+            steps {
+                // 릴리즈파일 체크아웃
+                checkout scmGit(branches: [[name: '*/master']],
+                    extensions: [[$class: 'SparseCheckoutPaths']],
+                    userRemoteConfigs: [[url: "${GITHUB_URL}"]])
+
+                sh "cp ./build/libs/cicd-test-0.0.1.jar ./app-0.0.1.jar"
+                sh "docker build -t ${DOCKERHUB_USERNAME}/test-server:v1.0.0 ."
+                script{
+                    if (DOCKERHUB_USERNAME == "khj010909") {
+                        echo "docker push ${DOCKERHUB_USERNAME}/test-server:v1.0.0"
+                    } else {
+                        sh "docker push ${DOCKERHUB_USERNAME}/test-server:v1.0.0"
+                    }
+                }
+            }
+        }
+
+        stage('K8S Deploy') {
+            steps {
+                sh "kubectl apply -f ./deploy/k8s/namespace.yaml"
+				sh "kubectl apply -f ./deploy/k8s/configmap.yaml"
+				sh "kubectl apply -f ./deploy/k8s/secret.yaml"
+				sh "kubectl apply -f ./deploy/k8s/service.yaml"
+				sh "kubectl apply -f ./deploy/k8s/deployment.yaml"
+            }
+        }
+    }
+}

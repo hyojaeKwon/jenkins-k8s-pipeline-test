@@ -20,4 +20,4 @@ spec:
     - port: 80
       targetPort: http
       nodePort: 8080
-  type: NodePort
+  type: ClusterIP

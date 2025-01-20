@@ -14,7 +14,7 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: test-server-1
+              name: default-service
               port:
                 number: 80
 

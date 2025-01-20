@@ -20,4 +20,5 @@ spec:
     - port: 80
       targetPort: http
       nodePort: 32121
-  type: NodePort
+  type: ExternalName
+  externalName: test-svc.test-deploy-ns

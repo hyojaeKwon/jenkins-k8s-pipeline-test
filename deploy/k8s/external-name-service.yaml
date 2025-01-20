@@ -4,4 +4,4 @@ metadata:
   name: default-service
 spec:
   type: ExternalName
-  externalName: test-service-1.test-deploy.svc.cluster.local
+  externalName: test-server-1.test-deploy.svc.cluster.local

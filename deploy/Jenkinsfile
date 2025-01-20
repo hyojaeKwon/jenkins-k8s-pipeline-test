@@ -42,6 +42,7 @@ pipeline {
 
         stage('K8S Deploy') {
             steps {
+                sh "kubectl apply -f ./deploy/k8s/external-name-service.yaml"
                 sh "kubectl apply -f ./deploy/k8s/namespace.yaml"
 				sh "kubectl apply -f ./deploy/k8s/configmap.yaml"
 				sh "kubectl apply -f ./deploy/k8s/secret.yaml"

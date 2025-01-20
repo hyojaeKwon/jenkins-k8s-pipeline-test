@@ -20,5 +20,4 @@ spec:
     - port: 80
       targetPort: http
       nodePort: 32121
-  type: ExternalName
-  externalName: test-server-1.test-deploy.svc.cluster.local
+  type: NodePort

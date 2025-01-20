@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: default-service
+spec:
+  type: ExternalName
+  externalName: test-service-1.test-deploy.svc.cluster.local

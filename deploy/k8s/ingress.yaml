@@ -14,7 +14,7 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: test-svc.test-deploy-ns
+              name: test-server-1
               port:
                 number: 80
 

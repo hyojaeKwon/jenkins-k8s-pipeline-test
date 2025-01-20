@@ -21,4 +21,4 @@ spec:
       targetPort: http
       nodePort: 32121
   type: ExternalName
-  externalName: test-svc.test-deploy-ns
+  externalName: test-server-1.test-deploy.svc.cluster.local

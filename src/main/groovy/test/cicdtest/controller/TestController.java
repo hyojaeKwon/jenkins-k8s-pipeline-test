@@ -42,6 +42,6 @@ public class TestController {
             return Integer.parseInt(number);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException();
-        }
+        } //
     }
 }
